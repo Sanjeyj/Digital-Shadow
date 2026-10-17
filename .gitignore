@@ -1,0 +1,50 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Backups
+backups/
+*.pre_restore_*.db
+
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Database
+*.db
+*.sqlite3
+
+# Uploads (never committed)
+uploads/
+tmp_uploads/
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# IDE / OS
+.idea/
+.vscode/
+*.DS_Store
+Thumbs.db
+
+# Test artifacts
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# Logs
+*.log

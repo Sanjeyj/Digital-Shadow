@@ -1,0 +1,151 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Report {{ report_id[:8] if report_id else '' }} — Digital Shadow</title>
+  <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<nav class="nav" role="navigation" aria-label="Main navigation">
+  <a href="/" class="nav-brand">
+    <div class="brand-icon" aria-hidden="true">🛡</div>
+    <span>Digital Shadow</span>
+  </a>
+  <div class="nav-links" id="nav-links">
+    <a href="/" class="nav-link">← New Analysis</a>
+    <a href="/about" class="nav-link">About</a>
+  </div>
+  <button class="nav-hamburger" id="nav-hamburger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="nav-links">
+    <span class="hamburger-bar"></span>
+    <span class="hamburger-bar"></span>
+    <span class="hamburger-bar"></span>
+  </button>
+</nav>
+
+<main class="container" style="padding-top:48px;padding-bottom:64px;" id="main-content">
+  <div id="report-loading" style="text-align:center;padding:80px 0;">
+    <div class="loader-ring" style="margin:0 auto 20px;"></div>
+    <p class="loader-text">Loading report…</p>
+  </div>
+
+  <div id="report-content" style="display:none;">
+    <div class="section-label">Stored Report</div>
+    <h1 class="section-title">Privacy Report
+      <span id="rpt-id" class="mono" style="font-size:1rem;color:var(--txt-muted);"></span>
+    </h1>
+
+    <div class="summary-grid" style="margin-top:24px;">
+      <div class="summary-pill">
+        <span id="rpt-score" class="summary-pill-value">—</span>
+        <div class="summary-pill-label">Risk Score</div>
+      </div>
+      <div class="summary-pill">
+        <span id="rpt-category" class="summary-pill-value" style="font-size:1.2rem;">—</span>
+        <div class="summary-pill-label">Risk Category</div>
+      </div>
+      <div class="summary-pill">
+        <span id="rpt-findings" class="summary-pill-value">—</span>
+        <div class="summary-pill-label">Total Findings</div>
+      </div>
+      <div class="summary-pill">
+        <span id="rpt-critical" class="summary-pill-value" style="color:var(--sev-critical)">—</span>
+        <div class="summary-pill-label">Critical</div>
+      </div>
+      <div class="summary-pill">
+        <span id="rpt-high" class="summary-pill-value" style="color:var(--sev-high)">—</span>
+        <div class="summary-pill-label">High</div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:20px;">
+      <p class="form-hint">
+        <strong>Timestamp:</strong> <span id="rpt-timestamp"></span>
+      </p>
+      <p class="form-hint" style="margin-top:8px;" id="rpt-disclaimer"></p>
+    </div>
+
+    <div style="margin-top:24px;" class="btn-group">
+      <a href="/" class="btn btn-primary">Run New Analysis</a>
+      <button id="delete-report-btn" class="btn btn-danger">Delete This Report</button>
+    </div>
+  </div>
+
+  <div id="report-error" style="display:none;" class="empty-state">
+    <div class="empty-state-icon">❌</div>
+    <div class="empty-state-title">Report Not Found</div>
+    <p class="empty-state-text">This report may have been deleted or may not exist.</p>
+    <a href="/" class="btn btn-primary" style="margin-top:24px;">Back to Analyzer</a>
+  </div>
+</main>
+
+<footer class="footer" role="contentinfo">
+  <div class="footer-brand"><span aria-hidden="true">🛡</span> Digital Shadow</div>
+  <span>Digital Shadow · Privacy Risk Analyzer</span>
+</footer>
+
+<div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+<script>
+'use strict';
+const REPORT_ID = {{ report_id | tojson }};
+
+async function loadReport() {
+  try {
+    const res = await fetch(`/api/report/${REPORT_ID}`);
+    const data = await res.json();
+    if (!res.ok) { showError(); return; }
+
+    document.getElementById('report-loading').style.display = 'none';
+    document.getElementById('report-content').style.display = 'block';
+
+    document.getElementById('rpt-id').textContent = `#${REPORT_ID.slice(0,8)}`;
+    document.getElementById('rpt-score').textContent = data.risk_score ?? '—';
+    document.getElementById('rpt-category').textContent = data.risk_category ?? '—';
+    document.getElementById('rpt-findings').textContent = data.total_findings ?? '—';
+    document.getElementById('rpt-critical').textContent = data.critical_count ?? 0;
+    document.getElementById('rpt-high').textContent = data.high_count ?? 0;
+    document.getElementById('rpt-timestamp').textContent = data.created_at ?? '—';
+    document.getElementById('rpt-disclaimer').textContent = data.disclaimer ?? '';
+  } catch(e) {
+    showError();
+  }
+}
+
+function showError() {
+  document.getElementById('report-loading').style.display = 'none';
+  document.getElementById('report-error').style.display = 'block';
+}
+
+document.getElementById('delete-report-btn').addEventListener('click', async () => {
+  if (!confirm('Delete this report? This cannot be undone.')) return;
+  try {
+    const res = await fetch(`/api/report/${REPORT_ID}`, { method: 'DELETE' });
+    if (res.ok) {
+      showToast('Report deleted.', 'success');
+      setTimeout(() => { window.location.href = '/'; }, 1500);
+    } else {
+      showToast('Could not delete report.', 'error');
+    }
+  } catch(e) {
+    showToast('Network error.', 'error');
+  }
+});
+
+function showToast(msg, type) {
+  const c = document.getElementById('toast-container');
+  const t = document.createElement('div');
+  t.className = `toast toast-${type}`;
+  t.textContent = msg;
+  c.appendChild(t);
+  setTimeout(() => t.remove(), 4000);
+}
+
+loadReport();
+</script>
+</body>
+</html>
+
+
