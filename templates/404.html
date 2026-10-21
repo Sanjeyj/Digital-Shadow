@@ -1,50 +1,82 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Page Not Found — Digital Shadow</title>
+  <meta name="robots" content="noindex">
+  <title>{{ code | default(404) }} — Digital Shadow</title>
   <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
+
 <nav class="nav" role="navigation" aria-label="Main navigation">
-  <a href="/" class="nav-brand">
+  <a href="/" class="nav-brand" aria-label="Digital Shadow — home">
     <div class="brand-icon" aria-hidden="true">🛡</div>
     <span>Digital Shadow</span>
   </a>
-  <div class="nav-links" id="nav-links">
-    <a href="/" class="nav-link">Analyzer</a>
-    <a href="/about" class="nav-link">About</a>
+  <div class="nav-links" id="nav-links" role="menubar">
+    <a href="/" class="nav-link" role="menuitem">Analyzer</a>
+    <a href="/about" class="nav-link" role="menuitem">About</a>
   </div>
-  <button class="nav-hamburger" id="nav-hamburger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="nav-links">
+  <button class="nav-hamburger" id="nav-hamburger"
+          aria-label="Open navigation menu" aria-expanded="false"
+          aria-controls="nav-links">
     <span class="hamburger-bar"></span>
     <span class="hamburger-bar"></span>
     <span class="hamburger-bar"></span>
   </button>
 </nav>
 
-<main class="container" style="padding-top:80px;" id="main-content">
-  <div class="empty-state">
-    <div class="empty-state-icon">🔍</div>
-    <h1 class="empty-state-title" style="font-size:2rem;">
-      {{ code | default(404) }} — {{ message | default('Page Not Found') }}
-    </h1>
-    <p class="empty-state-text" style="margin-top:12px;max-width:400px;margin-left:auto;margin-right:auto;">
-      The page you were looking for doesn't exist or has been moved.
+<main class="container" id="main-content">
+  <div class="error-page">
+    <div class="error-code" aria-hidden="true">{{ code | default(404) }}</div>
+    <h1 class="error-title">{{ message | default('Page Not Found') }}</h1>
+    <p class="error-message">
+      The page you're looking for doesn't exist or has been moved.
+      Internal server details have not been exposed.
     </p>
-    <div style="margin-top:32px;">
-      <a href="/" class="btn btn-primary">← Back to Analyzer</a>
+    <div class="btn-group" style="justify-content: center;">
+      <a href="/" class="btn btn-primary">
+        <span aria-hidden="true">🛡</span> Back to Analyzer
+      </a>
+      <a href="/about" class="btn btn-ghost">About</a>
     </div>
   </div>
 </main>
 
 <footer class="footer" role="contentinfo">
-  <div class="footer-brand"><span aria-hidden="true">🛡</span> Digital Shadow</div>
+  <div class="footer-brand">
+    <a href="/" aria-label="Digital Shadow home">
+      <span aria-hidden="true">🛡</span>
+      Digital Shadow
+    </a>
+  </div>
   <span>Privacy Risk Analyzer</span>
+  <span>&copy; <span id="footer-year"></span> Digital Shadow</span>
 </footer>
+
+<script>
+  document.getElementById('footer-year').textContent = new Date().getFullYear();
+  (function() {
+    var h = document.getElementById('nav-hamburger');
+    var nl = document.getElementById('nav-links');
+    if (!h || !nl) return;
+    h.addEventListener('click', function() {
+      var open = nl.classList.toggle('nav-open');
+      h.setAttribute('aria-expanded', String(open));
+      h.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu');
+    });
+    document.addEventListener('click', function(e) {
+      if (!h.contains(e.target) && !nl.contains(e.target)) {
+        nl.classList.remove('nav-open');
+        h.setAttribute('aria-expanded', 'false');
+        h.setAttribute('aria-label', 'Open navigation menu');
+      }
+    });
+  }());
+</script>
 </body>
 </html>
-
-

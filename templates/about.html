@@ -1,21 +1,15 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="About Digital Shadow — a personal data exposure mapping and privacy risk analysis tool.">
-  <title>About — Digital Shadow</title>
+  <meta name="description" content="About Digital Shadow — a transparent, rule-based personal data exposure mapping and privacy risk analysis tool. No external APIs, no data collection.">
   <meta name="robots" content="index, follow">
-
-  <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
-
-  <!-- Open Graph -->
   <meta property="og:type" content="website">
-  <meta property="og:title" content="About - Digital Shadow Privacy Analyzer">
-  <meta property="og:description" content="Learn how Digital Shadow analyzes your personal data exposure with transparent, rule-based privacy risk scoring.">
-
-  <!-- Performance: preconnect -->
+  <meta property="og:title" content="About — Digital Shadow Privacy Analyzer">
+  <meta property="og:description" content="Learn how Digital Shadow analyzes personal data exposure with transparent, rule-based privacy risk scoring.">
+  <title>About — Digital Shadow</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
@@ -23,221 +17,220 @@
 <body>
 
 <nav class="nav" role="navigation" aria-label="Main navigation">
-  <a href="/" class="nav-brand" aria-label="Digital Shadow home">
+  <a href="/" class="nav-brand" aria-label="Digital Shadow — home">
     <div class="brand-icon" aria-hidden="true">🛡</div>
     <span>Digital Shadow</span>
   </a>
-  <div class="nav-links" id="nav-links">
-    <a href="/" class="nav-link">Analyzer</a>
-    <a href="/about" class="nav-link active" aria-current="page">About</a>
-
+  <div class="nav-links" id="nav-links" role="menubar">
+    <a href="/" class="nav-link" role="menuitem">Analyzer</a>
+    <a href="/about" class="nav-link active" aria-current="page" role="menuitem">About</a>
   </div>
-  <button class="nav-hamburger" id="nav-hamburger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="nav-links">
+  <button class="nav-hamburger" id="nav-hamburger"
+          aria-label="Open navigation menu" aria-expanded="false"
+          aria-controls="nav-links">
     <span class="hamburger-bar"></span>
     <span class="hamburger-bar"></span>
     <span class="hamburger-bar"></span>
   </button>
 </nav>
 
-<main class="container" style="margin-top:48px;" id="main-content">
+<main class="container" style="margin-top: 56px; padding-bottom: 80px;" id="main-content">
 
-  <div class="section-label">Project Overview</div>
+  <div class="section-label">About This Tool</div>
   <h1 class="section-title">About Digital Shadow</h1>
   <p class="section-subtitle">
-    Digital Shadow explores personal data exposure,
-    privacy risk analysis, and practical cybersecurity education.
+    A transparent, production-grade privacy risk analyzer. Digital Shadow helps individuals
+    understand what personal information they expose online — and how to reduce their digital footprint.
   </p>
 
-  <!-- Problem & objectives -->
-  <section class="page-section" aria-labelledby="problem-heading">
-    <div class="about-grid">
-      <div class="about-card">
-        <div class="about-card-icon" aria-hidden="true">🎯</div>
-        <h2 class="about-card-title" id="problem-heading">The Problem</h2>
-        <p class="about-card-text">
-          People routinely share usernames, email addresses, phone numbers,
-          dates of birth, and profile links without understanding how these
-          individually ordinary pieces of data combine to create a uniquely
-          identifying profile — a "digital shadow."
-        </p>
-      </div>
-      <div class="about-card">
-        <div class="about-card-icon" aria-hidden="true">🔬</div>
-        <h2 class="about-card-title">The Approach</h2>
-        <p class="about-card-text">
-          Digital Shadow uses deterministic, rule-based analysis to evaluate
-          information you voluntarily supply. Every finding includes evidence,
-          an explanation, a consequence, and a practical mitigation step —
-          making the analysis transparent and educational.
-        </p>
-      </div>
-      <div class="about-card">
-        <div class="about-card-icon" aria-hidden="true">🏗</div>
-        <h2 class="about-card-title">Technology</h2>
-        <p class="about-card-text">
-          Built with Python Flask on the backend, Vanilla JavaScript and CSS3
-          on the frontend, SQLite for local persistence, and Chart.js for
-          visualizations. No machine learning, no external APIs, no trackers.
-        </p>
-      </div>
-      <div class="about-card">
-        <div class="about-card-icon" aria-hidden="true">🔒</div>
-        <h2 class="about-card-title">Privacy First</h2>
-        <p class="about-card-text">
-          Analysis runs entirely on the local server. No submitted data is sent
-          to third parties. URLs are analyzed structurally — no outbound HTTP
-          requests are made. Uploaded documents are deleted immediately after
-          metadata extraction.
-        </p>
-      </div>
+  <!-- Feature cards -->
+  <div class="about-grid" style="margin-top: 40px;">
+    <div class="about-card">
+      <span class="about-card-icon">🛡</span>
+      <h2 class="about-card-title">100% Local Analysis</h2>
+      <p class="about-card-text">
+        All analysis runs server-side with no outbound requests. Your submitted data is never
+        sent to third-party services, APIs, or analytics platforms.
+      </p>
     </div>
-  </section>
+    <div class="about-card">
+      <span class="about-card-icon">🔍</span>
+      <h2 class="about-card-title">Rule-Based Detection</h2>
+      <p class="about-card-text">
+        Digital Shadow uses 15+ deterministic, explainable rules to detect exposure patterns —
+        no machine learning, no black boxes. Every finding includes its evidence and reasoning.
+      </p>
+    </div>
+    <div class="about-card">
+      <span class="about-card-icon">📊</span>
+      <h2 class="about-card-title">Heuristic Risk Scoring</h2>
+      <p class="about-card-text">
+        A 0–100 risk score is computed from weighted severity contributions. Critical findings
+        carry more weight than low-severity ones, with deduplication to prevent score inflation.
+      </p>
+    </div>
+    <div class="about-card">
+      <span class="about-card-icon">📄</span>
+      <h2 class="about-card-title">Document Metadata</h2>
+      <p class="about-card-text">
+        Upload a PDF or DOCX file to extract embedded metadata: author name, software used,
+        creation date, and revision history. Files are deleted immediately after processing.
+      </p>
+    </div>
+    <div class="about-card">
+      <span class="about-card-icon">🔗</span>
+      <h2 class="about-card-title">URL Structure Analysis</h2>
+      <p class="about-card-text">
+        Profile and website URLs are parsed locally to detect HTTPS issues, embedded credentials,
+        tracking parameters, IP-based hostnames, and punycode deception — without making any requests.
+      </p>
+    </div>
+    <div class="about-card">
+      <span class="about-card-icon">💾</span>
+      <h2 class="about-card-title">Report Export</h2>
+      <p class="about-card-text">
+        Download your analysis report as JSON or CSV. Reports are generated client-side and
+        contain only what you submitted and the findings detected.
+      </p>
+    </div>
+  </div>
 
   <!-- Exposure categories -->
-  <section class="page-section" aria-labelledby="categories-heading" style="padding-top:0;">
-    <div class="section-label">Analysis Engine</div>
-    <h2 class="section-title" id="categories-heading">Exposure Categories</h2>
+  <div class="page-section" style="padding-bottom: 0;">
+    <div class="section-label">Detection Coverage</div>
+    <h2 class="section-title">What Digital Shadow Detects</h2>
+    <p class="section-subtitle">Six exposure categories, each with multiple detection rules.</p>
 
-    <div class="about-grid" style="margin-top:24px;">
-      {% set categories = [
-        ('A', '📧', 'Contact Information Exposure',
-         'Detects email addresses, phone number patterns, and co-located contact details.'),
-        ('B', '🧑', 'Personal Information Disclosure',
-         'Identifies date-of-birth patterns, postal address indicators, and multiple co-located attributes.'),
-        ('C', '🔗', 'Public Profile Exposure',
-         'Evaluates supplied profile URLs, multiple platform links, and username reuse patterns.'),
-        ('D', '📄', 'Sensitive Document Indicators',
-         'Analyzes document filename sensitivity and embedded metadata such as author and software version.'),
-        ('E', '🌐', 'URL Risk Indicators',
-         'Checks for non-HTTPS schemes, embedded credentials, suspicious hostnames, unusual ports, and tracking parameters.'),
-        ('F', '⚡', 'Information Combination Risk',
-         'Detects when individually ordinary attributes (name, email, profiles) combine to form a highly identifying profile.'),
-      ] %}
-      {% for code, icon, title, desc in categories %}
-      <div class="about-card">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
-          <span style="font-size:1.4rem;" aria-hidden="true">{{ icon }}</span>
-          <span style="font-size:0.72rem;font-weight:700;color:var(--clr-cyan);
-                       background:var(--clr-cyan-dim);padding:2px 8px;border-radius:10px;">
-            Category {{ code }}
-          </span>
+    <div class="about-grid" style="margin-top: 28px;">
+      <div class="card">
+        <div class="card-title">
+          <div class="card-icon" style="background: var(--clr-cyan-dim); color: var(--clr-cyan);">📧</div>
+          Identity &amp; Contact
         </div>
-        <h3 class="about-card-title">{{ title }}</h3>
-        <p class="about-card-text">{{ desc }}</p>
+        <p class="about-card-text">Email addresses, phone numbers, date of birth, and physical address patterns.</p>
       </div>
-      {% endfor %}
-    </div>
-  </section>
-
-  <!-- Scoring -->
-  <section class="page-section" aria-labelledby="scoring-heading" style="padding-top:0;">
-    <div class="card">
-      <div class="card-title">
-        <div class="card-icon" style="background:var(--clr-cyan-dim);color:var(--clr-cyan);">📊</div>
-        <h2 id="scoring-heading" style="font-size:1.1rem;font-weight:700;">Risk Scoring Algorithm</h2>
-      </div>
-      <p style="color:var(--txt-secondary);font-size:0.9rem;margin-bottom:20px;">
-        Each detected finding contributes a weighted score based on its severity.
-        The total is capped at 100 and mapped to a risk category.
-      </p>
-
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:20px;">
-        {% for label, color, pts, range in [
-          ('Low',      'var(--sev-low)',      '5 pts',  '0–19'),
-          ('Medium',   'var(--sev-medium)',   '10 pts', '20–39'),
-          ('High',     'var(--sev-high)',     '20 pts', '40–69'),
-          ('Critical', 'var(--sev-critical)', '30 pts', '70–100'),
-        ] %}
-        <div style="background:var(--clr-surface-2);border:1px solid var(--clr-border);
-                    border-radius:var(--radius-md);padding:16px;border-left:3px solid {{ color }};">
-          <div style="font-weight:700;color:{{ color }};margin-bottom:4px;">{{ label }}</div>
-          <div style="font-size:0.85rem;color:var(--txt-secondary);">
-            +{{ pts }} per finding · Risk category: {{ range }}
-          </div>
+      <div class="card">
+        <div class="card-title">
+          <div class="card-icon" style="background: var(--clr-blue-dim); color: var(--clr-blue);">🔗</div>
+          URL &amp; Profile Links
         </div>
-        {% endfor %}
+        <p class="about-card-text">HTTPS enforcement, credentials in URLs, tracking parameters, and IP-based hostnames.</p>
       </div>
-
-      <div class="consent-box">
-        <span class="consent-icon" aria-hidden="true">⚠</span>
-        <span>
-          <strong>Disclaimer:</strong> Risk scores are heuristic prototype estimates.
-          They are NOT a probability of identity theft, a formal security audit, or a
-          legal or insurance assessment. Deduplication ensures the same rule cannot
-          inflate the score by triggering multiple times.
-        </span>
-      </div>
-    </div>
-  </section>
-
-  <!-- Security notice -->
-  <section class="page-section" aria-labelledby="security-heading" style="padding-top:0;">
-    <div class="section-label">Security Design</div>
-    <h2 class="section-title" id="security-heading">Security Protections</h2>
-
-    <div class="limitation-list" role="list">
-      {% for item in [
-        'Input validation and size limits on all fields.',
-        'No outbound HTTP requests to user-submitted URLs (SSRF prevention).',
-        'Secure temporary file handling — uploads are deleted immediately after analysis.',
-        'Parameterized SQL queries — no SQL injection risk.',
-        'Output HTML-encoded in JavaScript to prevent XSS.',
-        'HTTP security headers on every response (CSP, X-Frame-Options, etc.).',
-        'No tracking, analytics, or third-party data sharing.',
-        'Filenames are sanitized using werkzeug secure_filename.',
-        'Report IDs are UUIDs — not sequential, not guessable.',
-      ] %}
-      <div class="limitation-item" role="listitem">
-        <span style="color:var(--sev-low);" aria-hidden="true">✓</span>
-        {{ item }}
-      </div>
-      {% endfor %}
-    </div>
-  </section>
-
-  <!-- API reference -->
-  <section class="page-section" aria-labelledby="api-heading" style="padding-top:0;">
-    <div class="card">
-      <div class="card-title">
-        <div class="card-icon" style="background:var(--clr-purple-dim);color:var(--clr-purple);">⚙</div>
-        <h2 id="api-heading" style="font-size:1.1rem;font-weight:700;">API Endpoints</h2>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:10px;">
-        {% for method, path, desc in [
-          ('GET',    '/',                        'Main analyzer dashboard'),
-          ('GET',    '/about',                   'About and documentation page'),
-          ('POST',   '/api/analyze',             'Run exposure analysis on submitted data'),
-          ('POST',   '/api/analyze-document',    'Extract and analyze document metadata'),
-          ('GET',    '/api/report/<id>',         'Retrieve a stored report summary'),
-          ('DELETE', '/api/report/<id>',         'Delete a stored report'),
-          ('GET',    '/api/health',              'Health check — returns {status: ok}'),
-        ] %}
-        <div style="display:flex;align-items:baseline;gap:12px;padding:8px 12px;
-                    background:var(--clr-surface-2);border-radius:var(--radius-sm);">
-          <span style="font-family:var(--font-mono);font-size:0.78rem;font-weight:700;
-                       color:{{ 'var(--sev-medium)' if method == 'POST' else ('var(--sev-critical)' if method == 'DELETE' else 'var(--clr-cyan)') }};
-                       min-width:52px;">{{ method }}</span>
-          <span style="font-family:var(--font-mono);font-size:0.85rem;color:var(--txt-primary);flex:1;">{{ path }}</span>
-          <span style="font-size:0.82rem;color:var(--txt-secondary);">{{ desc }}</span>
+      <div class="card">
+        <div class="card-title">
+          <div class="card-icon" style="background: var(--clr-purple-dim); color: var(--clr-purple);">👤</div>
+          Username Reuse
         </div>
-        {% endfor %}
+        <p class="about-card-text">Detection of identical usernames across multiple platforms, enabling cross-platform correlation.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">
+          <div class="card-icon" style="background: var(--sev-medium-dim); color: var(--sev-medium);">🔑</div>
+          Sensitive Keywords
+        </div>
+        <p class="about-card-text">Filenames and text patterns suggesting passwords, credentials, private keys, or financial data.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">
+          <div class="card-icon" style="background: var(--sev-critical-dim); color: var(--sev-critical);">🔗</div>
+          Combination Risks
+        </div>
+        <p class="about-card-text">Name + contact, name + address, and multi-attribute combinations that amplify exposure risk.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">
+          <div class="card-icon" style="background: var(--sev-low-dim); color: var(--sev-low);">📄</div>
+          Document Metadata
+        </div>
+        <p class="about-card-text">Author identity, editing software, revision history, and sensitive filename patterns in uploaded documents.</p>
       </div>
     </div>
-  </section>
+  </div>
+
+  <!-- Technical stack -->
+  <div class="page-section" style="padding-bottom: 0;">
+    <div class="section-label">Technology</div>
+    <h2 class="section-title">Technical Architecture</h2>
+    <div class="card" style="margin-top: 24px;">
+      <div class="about-card-text" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+        <div>
+          <strong style="color: var(--txt-primary); display: block; margin-bottom: 8px;">Backend</strong>
+          Python 3.12+ · Flask 3.x · Werkzeug · SQLite (WAL mode)
+        </div>
+        <div>
+          <strong style="color: var(--txt-primary); display: block; margin-bottom: 8px;">Analysis</strong>
+          pypdf · python-docx · stdlib urllib · re (compiled patterns)
+        </div>
+        <div>
+          <strong style="color: var(--txt-primary); display: block; margin-bottom: 8px;">Frontend</strong>
+          Vanilla HTML · CSS3 · JavaScript (ES6+) · Chart.js 4
+        </div>
+        <div>
+          <strong style="color: var(--txt-primary); display: block; margin-bottom: 8px;">Quality</strong>
+          157 automated tests · pytest · Security headers · Input sanitization
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Disclaimer -->
+  <div class="consent-box" style="margin-top: 48px;">
+    <span class="consent-icon" aria-hidden="true">⚠️</span>
+    <div>
+      <strong>Important disclaimer:</strong> Digital Shadow is a heuristic privacy awareness tool.
+      It is not a formal cybersecurity audit, legal privacy assessment, or penetration test.
+      The risk score is an estimate. Results should be interpreted alongside professional security advice.
+    </div>
+  </div>
+
+  <div style="margin-top: 40px; text-align: center;">
+    <a href="/" class="btn btn-primary btn-lg">
+      <span aria-hidden="true">🔍</span> Start Your Analysis
+    </a>
+  </div>
 
 </main>
 
 <footer class="footer" role="contentinfo">
   <div class="footer-brand">
-    <span aria-hidden="true">🛡</span>
-    Digital Shadow
+    <a href="/" aria-label="Digital Shadow home">
+      <span aria-hidden="true">🛡</span>
+      Digital Shadow
+    </a>
   </div>
-  <span>Digital Shadow</span>
-  <span>Analysis is 100% local · No data sent to third parties</span>
+  <div class="footer-links">
+    <a href="/about" class="footer-link">About</a>
+    <a href="/api/health" class="footer-link" target="_blank" rel="noopener">API Health</a>
+  </div>
+  <span>&copy; <span id="footer-year"></span> Digital Shadow &middot; Privacy Risk Analyzer</span>
 </footer>
 
-<script>document.getElementById("footer-year") && (document.getElementById("footer-year").textContent=new Date().getFullYear());var h=document.getElementById("nav-hamburger"),nl=document.getElementById("nav-links");if(h&&nl){h.addEventListener("click",function(){var open=nl.classList.toggle("nav-open");h.setAttribute("aria-expanded",open);h.setAttribute("aria-label",open?"Close navigation menu":"Open navigation menu")});document.addEventListener("click",function(e){if(!h.contains(e.target)&&!nl.contains(e.target)){nl.classList.remove("nav-open");h.setAttribute("aria-expanded","false");h.setAttribute("aria-label","Open navigation menu")}});}</script>
+<script>
+  document.getElementById('footer-year').textContent = new Date().getFullYear();
+  (function() {
+    var h = document.getElementById('nav-hamburger');
+    var nl = document.getElementById('nav-links');
+    if (!h || !nl) return;
+    h.addEventListener('click', function() {
+      var open = nl.classList.toggle('nav-open');
+      h.setAttribute('aria-expanded', String(open));
+      h.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu');
+    });
+    document.addEventListener('click', function(e) {
+      if (!h.contains(e.target) && !nl.contains(e.target)) {
+        nl.classList.remove('nav-open');
+        h.setAttribute('aria-expanded', 'false');
+        h.setAttribute('aria-label', 'Open navigation menu');
+      }
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && nl.classList.contains('nav-open')) {
+        nl.classList.remove('nav-open');
+        h.setAttribute('aria-expanded', 'false');
+        h.focus();
+      }
+    });
+  }());
+</script>
 </body>
 </html>
-
-

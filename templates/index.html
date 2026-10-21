@@ -1,10 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Digital Shadow: Analyze your personal data exposure and privacy risk with our free, local-first privacy analyzer. Understand what information you share online and how to protect yourself.">
-  <title>Digital Shadow — Personal Data Exposure & Privacy Risk Analyzer</title>
+  <meta name="description" content="Digital Shadow — Analyze your personal data exposure and privacy risk instantly. Free, local-first privacy analyzer powered by rule-based detection. No data leaves your device.">
   <meta name="robots" content="index, follow">
 
   <!-- Favicon -->
@@ -12,18 +11,21 @@
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Digital Shadow - Privacy Risk Analyzer">
-  <meta property="og:description" content="Discover what personal information you're unintentionally exposing online. Free, local-first privacy risk analysis.">
+  <meta property="og:title" content="Digital Shadow — Privacy Risk Analyzer">
+  <meta property="og:description" content="Discover what personal information you're unintentionally exposing online. Free, transparent, and 100% local.">
   <meta property="og:url" content="{{ request.host_url }}">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Digital Shadow - Privacy Risk Analyzer">
+  <meta name="twitter:title" content="Digital Shadow — Privacy Risk Analyzer">
   <meta name="twitter:description" content="Discover what personal information you're unintentionally exposing online.">
 
-  <!-- Performance: preconnect to font origins -->
+  <title>Digital Shadow — Personal Data Exposure &amp; Privacy Risk Analyzer</title>
+
+  <!-- Performance -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
 </head>
@@ -31,7 +33,7 @@
 
 <!-- ── Navigation ─────────────────────────────────────────────────────────── -->
 <nav class="nav" role="navigation" aria-label="Main navigation">
-  <a href="/" class="nav-brand" aria-label="Digital Shadow home">
+  <a href="/" class="nav-brand" aria-label="Digital Shadow — home">
     <div class="brand-icon" aria-hidden="true">🛡</div>
     <span>Digital Shadow</span>
   </a>
@@ -51,9 +53,9 @@
 <!-- ── Hero ───────────────────────────────────────────────────────────────── -->
 <header class="hero" role="banner">
   <div class="container">
-    <div class="hero-eyebrow" aria-label="Project category">
+    <div class="hero-eyebrow" aria-label="Tool category">
       <span aria-hidden="true">🔍</span>
-      Privacy Risk Analyzer · Local & Private
+      Privacy Risk Analyzer &middot; Local &amp; Private
     </div>
     <h1 class="hero-title">
       How much of your<br>
@@ -61,19 +63,21 @@
     </h1>
     <p class="hero-subtitle">
       Discover what personal information you're unintentionally exposing online.
-      Enter the data you publicly share and receive an explainable privacy risk report —
-      all processed locally, nothing sent to third parties.
+      Enter the data you publicly share and receive a detailed, explainable privacy risk report —
+      processed entirely on this server, nothing sent to third parties.
     </p>
 
-    <div class="hero-stats" aria-label="Analysis categories">
+    <div class="hero-stats" aria-label="Analyzer capabilities">
       <div class="hero-stat">
         <span class="hero-stat-number">6</span>
         <span class="hero-stat-label">Exposure categories</span>
       </div>
+      <div class="hero-stat-divider" aria-hidden="true"></div>
       <div class="hero-stat">
         <span class="hero-stat-number">15+</span>
         <span class="hero-stat-label">Detection rules</span>
       </div>
+      <div class="hero-stat-divider" aria-hidden="true"></div>
       <div class="hero-stat">
         <span class="hero-stat-number">100%</span>
         <span class="hero-stat-label">Local analysis</span>
@@ -83,22 +87,22 @@
 </header>
 
 <!-- ── Loader overlay ─────────────────────────────────────────────────────── -->
-<div id="loader-overlay" class="loader-overlay" role="status" aria-live="polite">
+<div id="loader-overlay" class="loader-overlay" role="status" aria-live="polite" aria-label="Analyzing">
   <div class="loader-ring" aria-hidden="true"></div>
   <p id="loader-text" class="loader-text">Analyzing your digital footprint…</p>
 </div>
 
 <!-- ── Main content ───────────────────────────────────────────────────────── -->
-<main id="main-content" class="container" style="margin-top:8px;">
+<main id="main-content" class="container" style="margin-top: 12px;">
 
-  <!-- ── Consent notice ─────────────────────────────────────────────────── -->
+  <!-- ── Privacy notice ────────────────────────────────────────────────── -->
   <div class="consent-box" role="note" aria-label="Privacy notice">
     <span class="consent-icon" aria-hidden="true">🔒</span>
     <div>
       <strong>Your privacy matters.</strong>
       All analysis runs locally on this server. None of your submitted information is
-      transmitted to third-party services. URLs are analyzed structurally — this application
-      <strong>does not fetch any URL you submit</strong>.
+      transmitted to third-party services. URLs are analyzed structurally —
+      <strong>no outbound requests are made</strong> to any URL you submit.
       Only a minimal, anonymized report summary is stored if you enable history.
     </div>
   </div>
@@ -108,17 +112,17 @@
     <div class="section-label">Step 1</div>
     <h2 class="section-title" id="analyze-heading">Enter your public information</h2>
     <p class="section-subtitle">
-      Provide the information you share publicly. All fields are optional —
+      Provide the information you share publicly online. All fields are optional —
       fill in what applies to your situation.
     </p>
 
-    <form id="analyze-form" novalidate style="margin-top:32px;">
+    <form id="analyze-form" novalidate style="margin-top: 32px;">
 
-      <!-- Basic identity -->
+      <!-- Identity & Contact -->
       <div class="card mb-16">
         <div class="card-title">
-          <div class="card-icon" style="background:var(--clr-cyan-dim); color:var(--clr-cyan);">👤</div>
-          Identity & Contact
+          <div class="card-icon" style="background: var(--clr-cyan-dim); color: var(--clr-cyan);">👤</div>
+          Identity &amp; Contact
         </div>
         <div class="form-grid">
           <div class="form-group" id="username-group">
@@ -130,9 +134,10 @@
                    placeholder="e.g. john_doe_dev"
                    maxlength="64"
                    autocomplete="off"
+                   spellcheck="false"
                    aria-describedby="username-hint">
             <span class="form-hint" id="username-hint">
-              The username or display name you use on public platforms.
+              The username or display name you use across public platforms.
             </span>
           </div>
 
@@ -145,6 +150,7 @@
                    placeholder="you@example.com"
                    maxlength="254"
                    autocomplete="off"
+                   spellcheck="false"
                    aria-describedby="email-hint email-error">
             <span class="form-hint" id="email-hint">
               If your email appears in public profiles or documents.
@@ -155,18 +161,16 @@
       </div>
 
       <!-- Profile URLs -->
-      <div class="card mb-16" style="margin-top:16px;">
+      <div class="card mb-16" style="margin-top: 16px;">
         <div class="card-title">
-          <div class="card-icon" style="background:var(--clr-blue-dim); color:var(--clr-blue);">🔗</div>
+          <div class="card-icon" style="background: var(--clr-blue-dim); color: var(--clr-blue);">🔗</div>
           Public Profile URLs
         </div>
-        <p class="form-hint" style="margin-bottom:14px;">
+        <p class="form-hint" style="margin-bottom: 14px;">
           Links to your public social media or professional profiles.
-          <strong>No outbound requests are made</strong> — URLs are analyzed locally.
+          <strong>No outbound requests are made</strong> — URLs are analyzed locally for structural risks.
         </p>
-        <div id="profile-url-list" class="url-list-container">
-          <!-- Dynamic rows added here -->
-        </div>
+        <div id="profile-url-list" class="url-list-container"></div>
         <button type="button" class="btn-add-url url-add-btn mt-8"
                 data-list="profile-url-list"
                 id="add-profile-url"
@@ -176,14 +180,12 @@
       </div>
 
       <!-- Website URLs -->
-      <div class="card mb-16" style="margin-top:16px;">
+      <div class="card mb-16" style="margin-top: 16px;">
         <div class="card-title">
-          <div class="card-icon" style="background:var(--clr-purple-dim); color:var(--clr-purple);">🌐</div>
+          <div class="card-icon" style="background: var(--clr-purple-dim); color: var(--clr-purple);">🌐</div>
           Public Website / Portfolio URLs
         </div>
-        <div id="website-url-list" class="url-list-container">
-          <!-- Dynamic rows added here -->
-        </div>
+        <div id="website-url-list" class="url-list-container"></div>
         <button type="button" class="btn-add-url url-add-btn mt-8"
                 data-list="website-url-list"
                 id="add-website-url"
@@ -192,19 +194,19 @@
         </button>
       </div>
 
-      <!-- Profile text -->
-      <div class="card mb-16" style="margin-top:16px;">
+      <!-- Profile Text -->
+      <div class="card mb-16" style="margin-top: 16px;">
         <div class="card-title">
-          <div class="card-icon" style="background:rgba(139,92,246,0.15); color:var(--clr-purple);">📝</div>
+          <div class="card-icon" style="background: var(--clr-purple-dim); color: var(--clr-purple);">📝</div>
           Public Profile Text
-          <span class="label-optional" style="font-size:0.8rem; font-weight:400; color:var(--txt-muted);">(optional)</span>
+          <span class="label-optional" style="font-size: 0.8rem; font-weight: 400; color: var(--txt-muted);">(optional)</span>
         </div>
         <div class="form-group">
           <label class="form-label" for="profile-text">
             Bio, about section, or any public text you share
           </label>
           <textarea id="profile-text" name="profile_text" class="form-textarea"
-                    placeholder="Paste your public bio, LinkedIn summary, or any text you share publicly…"
+                    placeholder="Paste your public bio, LinkedIn summary, Twitter bio, or any text you share publicly…"
                     maxlength="8000"
                     rows="5"
                     aria-describedby="profile-text-hint"></textarea>
@@ -215,7 +217,7 @@
       </div>
 
       <!-- Actions -->
-      <div class="btn-group" style="margin-top:24px;">
+      <div class="btn-group" style="margin-top: 28px;">
         <button type="button" id="analyze-btn" class="btn btn-primary btn-lg" disabled
                 aria-label="Run privacy analysis">
           <span aria-hidden="true">🔍</span> Analyze My Exposure
@@ -233,16 +235,16 @@
   </section>
 
   <!-- ── Document upload ─────────────────────────────────────────────────── -->
-  <section class="page-section" aria-labelledby="doc-heading" style="padding-top:0;">
+  <section class="page-section" aria-labelledby="doc-heading" style="padding-top: 0;">
     <div class="card">
       <div class="card-title">
-        <div class="card-icon" style="background:rgba(245,158,11,0.12); color:var(--sev-medium);">📄</div>
+        <div class="card-icon" style="background: rgba(245,158,11,0.10); color: var(--sev-medium);">📄</div>
         <span>Document Metadata Analysis</span>
-        <span class="sev-badge sev-low" style="margin-left:8px;">Optional</span>
+        <span class="sev-badge sev-low" style="margin-left: 8px;">Optional</span>
       </div>
-      <p class="form-hint" style="margin-bottom:20px;">
+      <p class="form-hint" style="margin-bottom: 22px;">
         Upload a PDF or DOCX document <strong>that you own or are authorized to inspect</strong>.
-        Only metadata is analyzed — the body text is never read or stored.
+        Only metadata is extracted — the body text is never read or stored.
         The file is deleted immediately after processing.
       </p>
 
@@ -252,11 +254,11 @@
                aria-label="Select document file">
         <div class="file-drop-icon" aria-hidden="true">📂</div>
         <div class="file-drop-text">Click or drag a PDF / DOCX file here</div>
-        <div class="file-drop-subtext">Maximum 5 MB · PDF and DOCX only</div>
+        <div class="file-drop-subtext">Maximum 5 MB &middot; PDF and DOCX only</div>
         <div id="selected-file-name" class="file-selected-name"></div>
       </div>
 
-      <div style="margin-top:14px;">
+      <div style="margin-top: 16px;">
         <button type="button" id="doc-analyze-btn" class="btn btn-secondary" disabled
                 aria-label="Analyze document metadata">
           <span aria-hidden="true">🔬</span> Analyze Document Metadata
@@ -269,10 +271,9 @@
   <section id="results-section" aria-labelledby="results-heading" aria-live="polite">
 
     <!-- Demo banner -->
-    <div id="demo-banner" class="demo-banner" role="note" style="display:none;">
+    <div id="demo-banner" class="demo-banner" role="note" style="display: none;">
       <span aria-hidden="true">🎭</span>
-      <strong>DEMONSTRATION DATA</strong> — The results below are generated from entirely
-      fictional sample information. No real person is represented.
+      <span><strong>DEMONSTRATION DATA</strong> — The results below are generated from entirely fictional sample information. No real person is represented.</span>
     </div>
 
     <div class="section-label">Analysis Report</div>
@@ -285,30 +286,29 @@
         <div class="summary-pill-label">Total Findings</div>
       </div>
       <div class="summary-pill">
-        <span class="summary-pill-value" id="pill-critical" style="color:var(--sev-critical)">0</span>
+        <span class="summary-pill-value" id="pill-critical" style="color: var(--sev-critical)">0</span>
         <div class="summary-pill-label">Critical</div>
       </div>
       <div class="summary-pill">
-        <span class="summary-pill-value" id="pill-high" style="color:var(--sev-high)">0</span>
+        <span class="summary-pill-value" id="pill-high" style="color: var(--sev-high)">0</span>
         <div class="summary-pill-label">High</div>
       </div>
       <div class="summary-pill">
-        <span class="summary-pill-value" id="pill-medium" style="color:var(--sev-medium)">0</span>
+        <span class="summary-pill-value" id="pill-medium" style="color: var(--sev-medium)">0</span>
         <div class="summary-pill-label">Medium</div>
       </div>
       <div class="summary-pill">
-        <span class="summary-pill-value" id="pill-low" style="color:var(--sev-low)">0</span>
+        <span class="summary-pill-value" id="pill-low" style="color: var(--sev-low)">0</span>
         <div class="summary-pill-label">Low</div>
       </div>
     </div>
 
     <!-- Score gauge -->
-    <div class="card" style="margin-bottom:20px;">
+    <div class="card" style="margin-bottom: 20px;">
       <div class="card-title">
-        <div class="card-icon" style="background:var(--clr-cyan-dim); color:var(--clr-cyan);">📊</div>
+        <div class="card-icon" style="background: var(--clr-cyan-dim); color: var(--clr-cyan);">📊</div>
         Heuristic Risk Score
       </div>
-
       <div class="score-panel">
         <div class="score-gauge-wrap" aria-label="Risk score gauge">
           <svg class="score-gauge-svg" viewBox="0 0 140 140" aria-hidden="true">
@@ -323,55 +323,53 @@
         </div>
 
         <div class="score-info">
-          <div id="score-category" class="score-category-badge sev-badge sev-low">Low</div>
-
+          <div id="score-category" class="score-category-badge sev-badge sev-low">Low Risk</div>
           <div class="score-stats" aria-label="Severity breakdown">
             <div class="score-stat">
-              <div class="score-stat-dot" style="background:var(--sev-critical)"></div>
+              <div class="score-stat-dot" style="background: var(--sev-critical)"></div>
               <span id="sc-critical">0</span> critical
             </div>
             <div class="score-stat">
-              <div class="score-stat-dot" style="background:var(--sev-high)"></div>
+              <div class="score-stat-dot" style="background: var(--sev-high)"></div>
               <span id="sc-high">0</span> high
             </div>
             <div class="score-stat">
-              <div class="score-stat-dot" style="background:var(--sev-medium)"></div>
+              <div class="score-stat-dot" style="background: var(--sev-medium)"></div>
               <span id="sc-medium">0</span> medium
             </div>
             <div class="score-stat">
-              <div class="score-stat-dot" style="background:var(--sev-low)"></div>
+              <div class="score-stat-dot" style="background: var(--sev-low)"></div>
               <span id="sc-low">0</span> low
             </div>
           </div>
-
           <p id="score-disclaimer" class="score-disclaimer"></p>
         </div>
       </div>
     </div>
 
     <!-- Charts -->
-    <div class="chart-grid" style="margin-bottom:20px;">
+    <div class="chart-grid" style="margin-bottom: 20px;">
       <div class="card">
-        <div class="card-title" style="font-size:0.95rem;">Findings by Severity</div>
+        <div class="card-title" style="font-size: 0.9rem;">Findings by Severity</div>
         <div class="chart-wrap">
           <canvas id="sev-chart" aria-label="Doughnut chart of findings by severity"></canvas>
         </div>
       </div>
       <div class="card">
-        <div class="card-title" style="font-size:0.95rem;">Findings by Category</div>
+        <div class="card-title" style="font-size: 0.9rem;">Findings by Category</div>
         <div class="chart-wrap">
           <canvas id="cat-chart" aria-label="Bar chart of findings by category"></canvas>
         </div>
       </div>
     </div>
 
-    <!-- Findings list -->
-    <div class="card" style="margin-bottom:20px;">
+    <!-- Detailed Findings -->
+    <div class="card" style="margin-bottom: 20px;">
       <div class="findings-header">
-        <div class="card-title" style="margin-bottom:0;">
-          <div class="card-icon" style="background:rgba(139,92,246,0.15); color:var(--clr-purple);">🔎</div>
+        <div class="card-title" style="margin-bottom: 0;">
+          <div class="card-icon" style="background: var(--clr-purple-dim); color: var(--clr-purple);">🔎</div>
           Detailed Findings
-          <span id="findings-count" class="sev-badge sev-low" style="margin-left:4px;">0</span>
+          <span id="findings-count" class="sev-badge sev-low" style="margin-left: 4px;">0</span>
         </div>
         <div class="findings-filters" role="group" aria-label="Filter findings by severity">
           <button class="filter-btn active" data-filter="all" id="filter-all">All</button>
@@ -385,9 +383,9 @@
     </div>
 
     <!-- Recommendations -->
-    <div class="card" style="margin-bottom:20px;">
+    <div class="card" style="margin-bottom: 20px;">
       <div class="card-title">
-        <div class="card-icon" style="background:var(--sev-low-dim); color:var(--sev-low);">✅</div>
+        <div class="card-icon" style="background: var(--sev-low-dim); color: var(--sev-low);">✅</div>
         Recommended Actions
       </div>
       <div id="recommendations-list" class="recommendations-list"></div>
@@ -396,11 +394,11 @@
     <!-- Export -->
     <div class="card">
       <div class="card-title">
-        <div class="card-icon" style="background:var(--clr-blue-dim); color:var(--clr-blue);">💾</div>
+        <div class="card-icon" style="background: var(--clr-blue-dim); color: var(--clr-blue);">💾</div>
         Export Report
       </div>
-      <p class="form-hint" style="margin-bottom:16px;">
-        Download your analysis report. Reports contain only what you submitted.
+      <p class="form-hint" style="margin-bottom: 18px;">
+        Download your full analysis report. Reports contain only what you submitted and the findings generated.
         Exported files are generated locally — no data leaves your device.
       </p>
       <div class="btn-group">
@@ -421,26 +419,27 @@
   <section class="page-section" aria-labelledby="limitations-heading">
     <div class="section-label">Transparency</div>
     <h2 class="section-title" id="limitations-heading">Known Limitations</h2>
+    <p class="section-subtitle">Digital Shadow is a heuristic tool, not a formal security audit.</p>
     <div class="limitation-list" role="list">
       <div class="limitation-item" role="listitem">
         <span class="limitation-icon" aria-hidden="true">⚠</span>
-        Analysis is limited to information you voluntarily submit. It does not search the internet.
+        Analysis is limited to information you voluntarily submit. It does not search the internet or access external data sources.
       </div>
       <div class="limitation-item" role="listitem">
         <span class="limitation-icon" aria-hidden="true">⚠</span>
-        Phone and address pattern detection may produce false positives.
+        Phone number and physical address detection may produce false positives depending on the text format.
       </div>
       <div class="limitation-item" role="listitem">
         <span class="limitation-icon" aria-hidden="true">⚠</span>
-        URL analysis is structural only — no outbound network requests are made.
+        URL analysis is structural only — no outbound network requests are made to any URL you submit.
       </div>
       <div class="limitation-item" role="listitem">
         <span class="limitation-icon" aria-hidden="true">⚠</span>
-        The risk score is a heuristic estimate, not a formal security audit or legal assessment.
+        The risk score is a heuristic estimate. It is not a formal cybersecurity audit or legal privacy assessment.
       </div>
       <div class="limitation-item" role="listitem">
         <span class="limitation-icon" aria-hidden="true">⚠</span>
-        Document metadata extraction depends on the file format and available libraries.
+        Document metadata extraction depends on the file format and available parsing libraries.
       </div>
     </div>
   </section>
@@ -455,16 +454,66 @@
       Digital Shadow
     </a>
   </div>
-  <span>Privacy Risk Analyzer</span>
-  <span>&copy; <span id="footer-year"></span> Digital Shadow &middot; Analysis is 100% local</span>
+  <div class="footer-links">
+    <a href="/about" class="footer-link">About</a>
+    <a href="/api/health" class="footer-link" target="_blank" rel="noopener">API Health</a>
+  </div>
+  <span>&copy; <span id="footer-year"></span> Digital Shadow &middot; Privacy Risk Analyzer &middot; Analysis is 100% local</span>
 </footer>
 
 <!-- ── Toast container ────────────────────────────────────────────────────── -->
 <div id="toast-container" class="toast-container" role="region" aria-label="Notifications" aria-live="polite"></div>
 
-<script>document.getElementById("footer-year").textContent=new Date().getFullYear();var h=document.getElementById("nav-hamburger"),nl=document.getElementById("nav-links");if(h&&nl){h.addEventListener("click",function(){var open=nl.classList.toggle("nav-open");h.setAttribute("aria-expanded",open);h.setAttribute("aria-label",open?"Close navigation menu":"Open navigation menu")});document.addEventListener("click",function(e){if(!h.contains(e.target)&&!nl.contains(e.target)){nl.classList.remove("nav-open");h.setAttribute("aria-expanded","false");h.setAttribute("aria-label","Open navigation menu")}});nl.querySelectorAll("a").forEach(function(a){a.addEventListener("click",function(){nl.classList.remove("nav-open");h.setAttribute("aria-expanded","false")})})}</script>
+<script>
+  // Footer year
+  document.getElementById('footer-year').textContent = new Date().getFullYear();
+
+  // Mobile nav
+  (function() {
+    var h = document.getElementById('nav-hamburger');
+    var nl = document.getElementById('nav-links');
+    if (!h || !nl) return;
+    h.addEventListener('click', function() {
+      var open = nl.classList.toggle('nav-open');
+      h.setAttribute('aria-expanded', String(open));
+      h.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu');
+    });
+    document.addEventListener('click', function(e) {
+      if (!h.contains(e.target) && !nl.contains(e.target)) {
+        nl.classList.remove('nav-open');
+        h.setAttribute('aria-expanded', 'false');
+        h.setAttribute('aria-label', 'Open navigation menu');
+      }
+    });
+    nl.querySelectorAll('a').forEach(function(a) {
+      a.addEventListener('click', function() {
+        nl.classList.remove('nav-open');
+        h.setAttribute('aria-expanded', 'false');
+      });
+    });
+    // Keyboard: Escape closes menu
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && nl.classList.contains('nav-open')) {
+        nl.classList.remove('nav-open');
+        h.setAttribute('aria-expanded', 'false');
+        h.focus();
+      }
+    });
+  }());
+
+  // File drop zone accessibility (Enter/Space)
+  (function() {
+    var dz = document.getElementById('doc-drop-zone');
+    var fi = document.getElementById('doc-file-input');
+    if (!dz || !fi) return;
+    dz.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fi.click(); }
+    });
+    dz.addEventListener('dragover', function(e) { e.preventDefault(); dz.classList.add('drag-over'); });
+    dz.addEventListener('dragleave', function()  { dz.classList.remove('drag-over'); });
+    dz.addEventListener('drop',     function(e)  { e.preventDefault(); dz.classList.remove('drag-over'); });
+  }());
+</script>
 <script src="{{ url_for('static', filename='js/app.js') }}"></script>
 </body>
 </html>
-
-
