@@ -29,7 +29,7 @@ class Config:
         "DATABASE_PATH",
         os.path.join(os.path.dirname(__file__), "digital_shadow.db"),
     )
-    PERSIST_REPORTS: bool = True     # set False to disable DB writes
+    PERSIST_REPORTS: bool = os.environ.get("PERSIST_REPORTS", "true").lower() == "true"
 
     # ── Risk scoring thresholds ───────────────────────────────────────────────
     SCORE_LOW_MAX: int = 19
