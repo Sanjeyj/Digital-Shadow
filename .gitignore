@@ -48,3 +48,10 @@ htmlcov/
 
 # Logs
 *.log
+# SQLite files (database & WAL)
+*.db
+*.db-shm
+*.db-wal
+
+# Sensitive files (do not commit)
+instance/config.py
