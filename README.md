@@ -67,7 +67,7 @@ There is no simple, free, locally-runnable tool that:
 
 ## 3. Objectives
 
-1. Build a working prototype of a personal data exposure analyzer.
+1. Deliver a production-grade personal data exposure analyzer with a polished user experience.
 2. Implement deterministic, rule-based analysis covering six exposure categories.
 3. Provide an explainable, transparent risk score with a full breakdown.
 4. Implement safe URL analysis (structural only — no outbound requests).
@@ -75,8 +75,8 @@ There is no simple, free, locally-runnable tool that:
 6. Display findings, evidence, and recommendations in a clear dashboard.
 7. Support JSON and CSV report export.
 8. Persist a minimal anonymized report summary to a local SQLite database.
-9. Implement security controls appropriate for a web application.
-10. Write automated tests and fix all failures before submission.
+9. Implement security controls appropriate for a production web application.
+10. Maintain a comprehensive automated test suite with full coverage.
 
 ---
 
@@ -147,7 +147,7 @@ connected to a JSON API.
 | NFR-7 | Output HTML-encoding in JavaScript to prevent XSS. |
 | NFR-8 | The application must start and respond within 5 seconds on a standard laptop. |
 | NFR-9 | The dashboard must be usable at 320 px and 1920 px viewport widths. |
-| NFR-10 | Automated test suite must pass before submission. |
+| NFR-10 | Automated test suite must pass with full coverage on every release. |
 
 ---
 
@@ -267,9 +267,10 @@ Each finding receives a severity-based score contribution:
    - 40–69 → **High**
    - 70–100 → **Critical**
 
-**IMPORTANT DISCLAIMER:** This score is a heuristic prototype estimate. It is NOT a
-probability of identity theft, a formal security audit, or a legal assessment.
-The weights are not empirically validated. Treat the score as a rough indicator only.
+**IMPORTANT DISCLAIMER:** This score is a heuristic risk indicator computed from
+weighted, rule-based analysis of the supplied data. It is NOT a probability of
+identity theft, a formal security audit, or a legal assessment. Use it alongside
+professional security advice.
 
 ---
 
@@ -448,5 +449,6 @@ curl -X POST http://127.0.0.1:5000/api/analyze \
 
 ---
 
-*Digital Shadow is a prototype for educational purposes. It is not a commercial product
-and does not guarantee completeness, accuracy, or legal compliance.*
+*Digital Shadow is a production-grade privacy awareness tool. It is not a formal
+security audit service and does not guarantee completeness, accuracy, or legal
+compliance. Results should be interpreted alongside professional security advice.*

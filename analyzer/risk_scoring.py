@@ -2,8 +2,8 @@
 analyzer/risk_scoring.py
 Deterministic, explainable risk-scoring engine.
 
-DISCLAIMER: The scores produced here are heuristic estimates intended to
-illustrate the relative weight of different privacy exposure indicators.
+DISCLAIMER: The scores produced here are heuristic estimates based on
+weighted severity contributions from deterministic, rule-based detection.
 They are NOT a probability of identity theft, a formal security audit result,
 or an insurance assessment. They should not be used for legal or regulatory
 compliance purposes without independent expert review.
@@ -67,9 +67,10 @@ def compute_score(findings: list[dict]) -> dict:
         "risk_category": risk_category,
         "score_breakdown": breakdown,
         "disclaimer": (
-            "This score is a heuristic prototype estimate based on the information "
-            "you supplied. It is NOT a probability of identity theft, a security "
-            "audit, or a legal assessment. Treat it as a rough indicator only."
+            "This score is a heuristic risk indicator computed from weighted, "
+            "rule-based analysis of the information you supplied. It is NOT a "
+            "probability of identity theft, a formal security audit, or a legal "
+            "assessment. Use it alongside professional security advice."
         ),
     }
 

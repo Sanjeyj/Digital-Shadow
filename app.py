@@ -371,7 +371,7 @@ def _build_report(
             "Analysis is limited to the information you voluntarily submitted.",
             "URL analysis is structural only — no outbound requests are made.",
             "Pattern matching may produce false positives for phone numbers and addresses.",
-            "The risk score is a heuristic estimate, not a security audit.",
+            "The risk score is a heuristic indicator, not a formal security audit or legal assessment.",
             "This application does not claim to find all exposures on the internet.",
         ],
     }
