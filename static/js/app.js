@@ -444,7 +444,7 @@ function renderCharts(report) {
             'rgba(245,158,11,0.85)',
             'rgba(34,197,94,0.85)',
           ],
-          borderColor: '#0d1526',
+          borderColor: '#050505',
           borderWidth: 3,
           hoverOffset: 6,
         }],
@@ -456,7 +456,7 @@ function renderCharts(report) {
         plugins: {
           legend: {
             position: 'bottom',
-            labels: { color: '#8ba0c8', font: { size: 12 }, padding: 12 },
+            labels: { color: '#a89cb8', font: { size: 12 }, padding: 12 },
           },
         },
       },
@@ -472,8 +472,8 @@ function renderCharts(report) {
         labels: Object.keys(cats).map(k => k.length > 22 ? k.slice(0, 22) + '…' : k),
         datasets: [{
           data: Object.values(cats),
-          backgroundColor: 'rgba(0,212,255,0.25)',
-          borderColor: 'rgba(0,212,255,0.8)',
+          backgroundColor: 'rgba(0, 229, 255, 0.25)',
+          borderColor: 'rgba(0, 229, 255, 0.85)',
           borderWidth: 2,
           borderRadius: 6,
         }],
@@ -483,10 +483,10 @@ function renderCharts(report) {
         maintainAspectRatio: false,
         plugins: { legend: { display: false } },
         scales: {
-          x: { ticks: { color: '#8ba0c8', font: { size: 11 } }, grid: { display: false } },
+          x: { ticks: { color: '#a89cb8', font: { size: 11 } }, grid: { display: false } },
           y: {
-            ticks: { color: '#8ba0c8', stepSize: 1 },
-            grid: { color: 'rgba(56,139,255,0.08)' },
+            ticks: { color: '#a89cb8', stepSize: 1 },
+            grid: { color: 'rgba(94, 22, 166, 0.20)' },
             beginAtZero: true,
           },
         },

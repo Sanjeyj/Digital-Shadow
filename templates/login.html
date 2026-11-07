@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Sign in to Digital Shadow — Zero-knowledge access to personal data exposure mapping and privacy risk auditing.">
+  <meta name="robots" content="index, follow">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Sign In — Digital Shadow">
+  <meta property="og:description" content="Access your privacy risk analysis reports and threat exposure profile securely.">
+  <meta property="og:url" content="{{ request.host_url }}login">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Sign In — Digital Shadow">
+  <meta name="twitter:description" content="Access your privacy risk analysis reports and threat exposure profile securely.">
+
+  <title>Sign In — Digital Shadow</title>
+
+  <!-- Performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<!-- ── Navigation ─────────────────────────────────────────────────────────── -->
+<nav class="nav" role="navigation" aria-label="Main navigation">
+  <a href="/" class="nav-brand" aria-label="Digital Shadow — home">
+    <div class="brand-icon" aria-hidden="true">🛡</div>
+    <span>Digital Shadow</span>
+  </a>
+  <div class="nav-links" id="nav-links" role="menubar">
+    <a href="/" class="nav-link" role="menuitem">Analyzer</a>
+    <a href="/about" class="nav-link" role="menuitem">About</a>
+    {% if current_user %}
+      <span class="nav-user-pill" title="Signed in as {{ current_user.username }}">
+        <span class="nav-user-avatar">{{ current_user.username[:1].upper() }}</span>
+        <span>{{ current_user.username }}</span>
+      </span>
+      <a href="/logout" class="nav-logout-btn" role="menuitem">Sign Out</a>
+    {% else %}
+      <a href="/login" class="nav-link active nav-btn-login" aria-current="page" role="menuitem">Sign In</a>
+    {% endif %}
+  </div>
+  <button class="nav-hamburger" id="nav-hamburger"
+          aria-label="Open navigation menu" aria-expanded="false"
+          aria-controls="nav-links">
+    <span class="hamburger-bar"></span>
+    <span class="hamburger-bar"></span>
+    <span class="hamburger-bar"></span>
+  </button>
+</nav>
+
+<!-- ── Main Login Page ───────────────────────────────────────────────────── -->
+<main class="auth-page" id="main-content">
+  <div class="auth-ambient-glow" aria-hidden="true"></div>
+
+  <div class="auth-container">
+    <div class="auth-card">
+      <div class="auth-header">
+        <div class="auth-shield-wrap" aria-hidden="true">🛡</div>
+        <div class="auth-eyebrow">
+          <span>🔒 Zero-Knowledge Security</span>
+        </div>
+        <h1 class="auth-title">Welcome Back</h1>
+        <p class="auth-subtitle">
+          Sign in to access your saved privacy evaluations, exposure vectors, and security audit logs.
+        </p>
+      </div>
+
+      <!-- Tab toggle: Sign In / Create Account -->
+      <div class="auth-tabs" role="tablist" aria-label="Authentication mode">
+        <button type="button" class="auth-tab active" id="tab-login" role="tab" aria-selected="true" aria-controls="auth-form">
+          Sign In
+        </button>
+        <button type="button" class="auth-tab" id="tab-register" role="tab" aria-selected="false" aria-controls="auth-form">
+          Create Account
+        </button>
+      </div>
+
+      {% if error %}
+        <div class="auth-flash auth-flash-error" role="alert">
+          <span aria-hidden="true">⚠️</span>
+          <span>{{ error }}</span>
+        </div>
+      {% endif %}
+
+      <div id="js-flash" class="auth-flash auth-flash-error" style="display:none;" role="alert"></div>
+
+      <!-- Auth Form -->
+      <form id="auth-form" method="POST" action="/login" novalidate>
+        <input type="hidden" name="action" id="auth-action" value="login">
+
+        <div class="form-group" style="margin-bottom: 16px;">
+          <label class="form-label" for="username">
+            <span id="label-identifier">Username or Email</span>
+          </label>
+          <div class="input-with-icon">
+            <input
+              type="text"
+              id="username"
+              name="username"
+              class="form-input"
+              placeholder="analyst@digitalshadow.local"
+              required
+              autocomplete="username"
+              autofocus
+            >
+            <span class="input-icon" aria-hidden="true">👤</span>
+          </div>
+          <span class="form-error" id="username-error"></span>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 14px;">
+          <label class="form-label" for="password">Password</label>
+          <div class="input-with-icon">
+            <input
+              type="password"
+              id="password"
+              name="password"
+              class="form-input"
+              placeholder="••••••••••••"
+              required
+              autocomplete="current-password"
+            >
+            <span class="input-icon" aria-hidden="true">🔑</span>
+            <button
+              type="button"
+              class="password-toggle-btn"
+              id="toggle-pwd-btn"
+              aria-label="Show password"
+              title="Show password"
+            >
+              👁️
+            </button>
+          </div>
+          <span class="form-error" id="password-error"></span>
+        </div>
+
+        <div class="auth-options">
+          <label class="custom-checkbox-label">
+            <input type="checkbox" name="remember" id="remember" value="1" checked>
+            <span>Remember this device</span>
+          </label>
+          <a href="#" class="auth-forgot-link" id="forgot-link">Forgot password?</a>
+        </div>
+
+        <button type="submit" class="btn btn-auth-submit" id="submit-btn">
+          <span id="submit-btn-text">Authorize &amp; Sign In</span>
+        </button>
+
+        <div class="auth-divider">
+          <span>Or Quick Access</span>
+        </div>
+
+        <button type="button" class="btn-demo-quick" id="btn-demo-analyst">
+          <span aria-hidden="true">⚡</span>
+          <span>Instant Demo Access (Security Analyst)</span>
+        </button>
+      </form>
+
+      <!-- Trust & Security Signals -->
+      <div class="auth-security-notes">
+        <div class="auth-security-item">
+          <span aria-hidden="true">🛡️</span>
+          <span>100% Local Isolation</span>
+        </div>
+        <div class="auth-security-item">
+          <span aria-hidden="true">🔒</span>
+          <span>Zero-Knowledge Proof</span>
+        </div>
+        <div class="auth-security-item">
+          <span aria-hidden="true">🚫</span>
+          <span>No 3rd-Party Tracking</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- ── Footer ─────────────────────────────────────────────────────────────── -->
+<footer class="footer" role="contentinfo">
+  <div class="footer-brand">
+    <div class="brand-icon" style="width:24px;height:24px;font-size:0.75rem;" aria-hidden="true">🛡</div>
+    <a href="/" style="color:inherit;text-decoration:none;">Digital Shadow</a>
+    <span style="color:var(--txt-muted);font-weight:400;margin-left:4px;">&mdash; Privacy Risk Analyzer</span>
+  </div>
+  <div class="footer-links">
+    <a href="/" class="footer-link">Analyzer</a>
+    <a href="/about" class="footer-link">About &amp; Methodology</a>
+    <a href="/login" class="footer-link">Sign In</a>
+  </div>
+  <div class="footer-copy">
+    &copy; <span id="footer-year">2026</span> Digital Shadow &middot; Local, explainable privacy assessment.
+  </div>
+</footer>
+
+<!-- ── Page Interactions ─────────────────────────────────────────────────── -->
+<script>
+  (function() {
+    // Current year in footer
+    const yr = document.getElementById('footer-year');
+    if (yr) yr.textContent = new Date().getFullYear();
+
+    // Mobile nav toggle
+    const hamburger = document.getElementById('nav-hamburger');
+    const navLinks = document.getElementById('nav-links');
+    if (hamburger && navLinks) {
+      hamburger.addEventListener('click', function() {
+        const open = navLinks.classList.toggle('nav-open');
+        hamburger.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+    }
+
+    // Password visibility toggle
+    const pwdInput = document.getElementById('password');
+    const togglePwdBtn = document.getElementById('toggle-pwd-btn');
+    if (pwdInput && togglePwdBtn) {
+      togglePwdBtn.addEventListener('click', function() {
+        const isPwd = pwdInput.type === 'password';
+        pwdInput.type = isPwd ? 'text' : 'password';
+        togglePwdBtn.textContent = isPwd ? '🔒' : '👁️';
+        togglePwdBtn.setAttribute('aria-label', isPwd ? 'Hide password' : 'Show password');
+      });
+    }
+
+    // Tabs toggle
+    const tabLogin = document.getElementById('tab-login');
+    const tabRegister = document.getElementById('tab-register');
+    const authAction = document.getElementById('auth-action');
+    const submitBtnText = document.getElementById('submit-btn-text');
+    const labelIdentifier = document.getElementById('label-identifier');
+
+    function setTab(mode) {
+      if (mode === 'register') {
+        tabLogin.classList.remove('active');
+        tabLogin.setAttribute('aria-selected', 'false');
+        tabRegister.classList.add('active');
+        tabRegister.setAttribute('aria-selected', 'true');
+        authAction.value = 'register';
+        submitBtnText.textContent = 'Create Analyst Account';
+        labelIdentifier.textContent = 'Choose Username or Email';
+      } else {
+        tabRegister.classList.remove('active');
+        tabRegister.setAttribute('aria-selected', 'false');
+        tabLogin.classList.add('active');
+        tabLogin.setAttribute('aria-selected', 'true');
+        authAction.value = 'login';
+        submitBtnText.textContent = 'Authorize & Sign In';
+        labelIdentifier.textContent = 'Username or Email';
+      }
+    }
+
+    if (tabLogin && tabRegister) {
+      tabLogin.addEventListener('click', () => setTab('login'));
+      tabRegister.addEventListener('click', () => setTab('register'));
+    }
+
+    // One-Click Demo Analyst Login
+    const demoBtn = document.getElementById('btn-demo-analyst');
+    const usernameInput = document.getElementById('username');
+    const authForm = document.getElementById('auth-form');
+
+    if (demoBtn && usernameInput && pwdInput && authForm) {
+      demoBtn.addEventListener('click', function() {
+        usernameInput.value = 'analyst';
+        pwdInput.value = 'digital-shadow-demo';
+        setTab('login');
+        authForm.submit();
+      });
+    }
+
+    // Forgot password alert
+    const forgotLink = document.getElementById('forgot-link');
+    if (forgotLink) {
+      forgotLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        alert('Digital Shadow runs in 100% local zero-knowledge mode. For demo and evaluation access, simply click the "Instant Demo Access" button below or enter any credentials with a 4+ character password.');
+      });
+    }
+
+    // Client-side validation
+    if (authForm) {
+      authForm.addEventListener('submit', function(e) {
+        let valid = true;
+        const uErr = document.getElementById('username-error');
+        const pErr = document.getElementById('password-error');
+        if (uErr) uErr.textContent = '';
+        if (pErr) pErr.textContent = '';
+
+        if (!usernameInput.value.trim()) {
+          if (uErr) uErr.textContent = 'Username or email is required.';
+          valid = false;
+        }
+
+        if (!pwdInput.value.trim()) {
+          if (pErr) pErr.textContent = 'Password is required.';
+          valid = false;
+        } else if (pwdInput.value.length < 4) {
+          if (pErr) pErr.textContent = 'Password must be at least 4 characters.';
+          valid = false;
+        }
+
+        if (!valid) {
+          e.preventDefault();
+        }
+      });
+    }
+  })();
+</script>
+
+</body>
+</html>
+

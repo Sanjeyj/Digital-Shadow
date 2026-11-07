@@ -20,6 +20,15 @@
   <div class="nav-links" id="nav-links" role="menubar">
     <a href="/" class="nav-link" role="menuitem">Analyzer</a>
     <a href="/about" class="nav-link" role="menuitem">About</a>
+    {% if current_user %}
+      <span class="nav-user-pill" title="Signed in as {{ current_user.username }}">
+        <span class="nav-user-avatar">{{ current_user.username[:1].upper() }}</span>
+        <span>{{ current_user.username }}</span>
+      </span>
+      <a href="/logout" class="nav-logout-btn" role="menuitem">Sign Out</a>
+    {% else %}
+      <a href="/login" class="nav-link nav-btn-login" role="menuitem">Sign In</a>
+    {% endif %}
   </div>
   <button class="nav-hamburger" id="nav-hamburger"
           aria-label="Open navigation menu" aria-expanded="false"

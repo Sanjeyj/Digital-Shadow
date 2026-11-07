@@ -23,9 +23,11 @@ from flask import (
     Flask,
     abort,
     jsonify,
+    redirect,
     render_template,
     request,
     send_file,
+    session,
     url_for,
 )
 from werkzeug.utils import secure_filename
@@ -90,6 +92,11 @@ def create_app(env: str | None = None) -> Flask:
             return jsonify(error="An internal error occurred."), 500
         return render_template("404.html", code=500, message="Internal Server Error"), 500
 
+    # ── User Context ──────────────────────────────────────────────────────────
+    @app.context_processor
+    def inject_auth_user():
+        return {"current_user": session.get("user")}
+
     # ── Page routes ───────────────────────────────────────────────────────────
 
     @app.route("/")
@@ -99,6 +106,73 @@ def create_app(env: str | None = None) -> Flask:
     @app.route("/about")
     def about():
         return render_template("about.html")
+
+    @app.route("/login", methods=["GET", "POST"])
+    def login():
+        if request.method == "GET" and session.get("user"):
+            return redirect(url_for("index"))
+
+        if request.method == "POST":
+            if request.is_json:
+                data = request.get_json(silent=True) or {}
+                username_or_email = (data.get("username") or data.get("email") or "").strip()
+                password = (data.get("password") or "").strip()
+                remember = bool(data.get("remember", False))
+                action = data.get("action", "login")
+            else:
+                username_or_email = (request.form.get("username") or request.form.get("email") or "").strip()
+                password = (request.form.get("password") or "").strip()
+                remember = request.form.get("remember") in ("1", "true", "on")
+                action = request.form.get("action", "login")
+
+            if not username_or_email:
+                error_msg = "Please enter your username or email address."
+                if request.is_json:
+                    return jsonify(success=False, error=error_msg), 400
+                return render_template("login.html", error=error_msg), 400
+
+            if not password:
+                error_msg = "Please enter your password."
+                if request.is_json:
+                    return jsonify(success=False, error=error_msg), 400
+                return render_template("login.html", error=error_msg), 400
+
+            if len(password) < 4:
+                error_msg = "Password must be at least 4 characters long."
+                if request.is_json:
+                    return jsonify(success=False, error=error_msg), 400
+                return render_template("login.html", error=error_msg), 400
+
+            # Derive clean display handle
+            user_handle = username_or_email.split("@")[0] if "@" in username_or_email else username_or_email
+            user_handle = re.sub(r"[^\w.-]", "", user_handle)[:32] or "Analyst"
+
+            user_session = {
+                "username": user_handle,
+                "email": username_or_email if "@" in username_or_email else f"{user_handle}@digitalshadow.local",
+                "role": "Privacy & Security Analyst",
+                "is_authenticated": True,
+                "logged_in_at": datetime.now(timezone.utc).isoformat(),
+            }
+            session["user"] = user_session
+            session.permanent = remember
+
+            if request.is_json:
+                return jsonify(
+                    success=True,
+                    user=user_session,
+                    message="Authentication successful.",
+                    redirect=url_for("index"),
+                ), 200
+
+            return redirect(url_for("index"))
+
+        return render_template("login.html")
+
+    @app.route("/logout")
+    def logout():
+        session.pop("user", None)
+        return redirect(url_for("index"))
 
     @app.route("/report/<report_id>")
     def view_report(report_id: str):
@@ -138,6 +212,7 @@ def create_app(env: str | None = None) -> Flask:
             '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
             f'  <url><loc>{base}/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>\n'
             f'  <url><loc>{base}/about</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>\n'
+            f'  <url><loc>{base}/login</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>\n'
             '</urlset>\n'
         )
         return Response(xml, mimetype="application/xml")

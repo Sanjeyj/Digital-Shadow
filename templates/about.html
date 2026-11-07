@@ -24,6 +24,15 @@
   <div class="nav-links" id="nav-links" role="menubar">
     <a href="/" class="nav-link" role="menuitem">Analyzer</a>
     <a href="/about" class="nav-link active" aria-current="page" role="menuitem">About</a>
+    {% if current_user %}
+      <span class="nav-user-pill" title="Signed in as {{ current_user.username }}">
+        <span class="nav-user-avatar">{{ current_user.username[:1].upper() }}</span>
+        <span>{{ current_user.username }}</span>
+      </span>
+      <a href="/logout" class="nav-logout-btn" role="menuitem">Sign Out</a>
+    {% else %}
+      <a href="/login" class="nav-link nav-btn-login" role="menuitem">Sign In</a>
+    {% endif %}
   </div>
   <button class="nav-hamburger" id="nav-hamburger"
           aria-label="Open navigation menu" aria-expanded="false"
@@ -200,6 +209,7 @@
   </div>
   <div class="footer-links">
     <a href="/about" class="footer-link">About</a>
+    <a href="/login" class="footer-link">Sign In</a>
     <a href="/api/health" class="footer-link" target="_blank" rel="noopener">API Health</a>
   </div>
   <span>&copy; <span id="footer-year"></span> Digital Shadow &middot; Privacy Risk Analyzer</span>
